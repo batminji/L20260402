@@ -1,29 +1,41 @@
 #include <iostream>
 #include <vector>
 
-int main()
+void Solution(int N, const std::vector<int> Arr1, const std::vector<int> Arr2)
 {
-	unsigned long long X = 0;
-	int N = 0;
-
-	std::cin >> N;
-
-	unsigned long long Result = 0;
+	std::vector<int> MyMap(N, 0);
 	for (int i = 0; i < N; ++i)
 	{
-		std::cin >> X;
-		
-		unsigned long long NPOT = 1;
-		
-		while (NPOT <= X)
+		MyMap[i] = Arr1[i] | Arr2[i];
+	}
+
+	for (int i = 0; i < N; ++i)
+	{
+		int Pow = 1 << (N - 1);
+
+		for (int j = 0; j < N; ++j)
 		{
-			NPOT = NPOT << 1;
+			if (Pow & MyMap[i])
+			{
+				std::cout << "#";
+			}
+			else
+			{
+				std::cout << " ";
+			}
+			Pow = Pow >> 1;
 		}
+		std::cout << std::endl;
+	}
+}
 
-		Result ^= NPOT;
-	}	
+int main()
+{
+	int N = 5;
+	std::vector<int> Arr1 = { 9, 20, 28, 18, 11 };
+	std::vector<int> Arr2 = { 30, 1, 21, 17, 28 };
 
-	std::cout << Result << std::endl;
+	Solution(N, Arr1, Arr2);
 
 	return 0;
 }
